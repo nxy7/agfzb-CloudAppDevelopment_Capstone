@@ -27,19 +27,21 @@ def contact(request):
     if request.method == "GET":
         return render(request, 'djangoapp/contact.html', context)
 
+def registration(request):
+    context = {}
+    if request.method == "GET":
+        return render(request, 'djangoapp/registration.html', context)
+
 # Create a `login_request` view to handle sign in request
 def login_request(request):
     name = request.POST.get("username")
     password = request.POST.get("password")
-    print(name, " ", password)
     if name is None or password is None:
         return render(request, 'djangoapp/index.html')
-    u = User.objects.get(username=name, password=password)
-    print(u)
-    if u is not None:
-        login(request, user=u)
+    u = authenticate(request, username=name, password=password)
+    login(request, u)
     return render(request, 'djangoapp/index.html')
-# ...
+
 
 # Create a `logout_request` view to handle sign out request
 def logout_request(request):
@@ -48,7 +50,18 @@ def logout_request(request):
 # ...
 
 # Create a `registration_request` view to handle sign up request
-# def registration_request(request):
+def registration_request(request):
+    name = request.POST.get("username")
+    password = request.POST.get("password")
+    print(name, " ", password)
+    if name is None or password is None:
+        return render(request, 'djangoapp/index.html')
+    u = authenticate(request, username=name, password=password)
+    login(request, u)
+    return render(request, 'djangoapp/index.html')
+
+
+
 # ...
 
 # Update the `get_dealerships` view to render the index page with a list of dealerships
