@@ -1,7 +1,30 @@
 {% extends "djangoapp/base.html" %}
 
 {% block content %}
-<h1>
+<h1 class="text-xl font-bold">
 Sign up
 </h1>
+<form class="flex flex-col gap-8" action="/djangoapp/registration_request" method="post">
+  {% csrf_token %}
+
+  <label>
+    Username
+    <input type="text" class="form-control" id="username" name="username" />
+  </label>
+  <label>
+    First Name
+    <input type="text" class="form-control" id="firstname" name="firstname"/>
+  </label>
+  <label>
+    Last Name
+    <input type="text" class="form-control" id="lastname" name="lastname"/>
+  </label>
+  <label>
+    Password
+    <input type="password" class="form-control" id="password" name="password"/>
+  </label>
+  <label>
+    <input type="submit" value="Sign Up" class="form-control"  />
+  </label>
+</form>
 {% endblock %}
